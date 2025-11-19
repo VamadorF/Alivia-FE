@@ -23,14 +23,34 @@ Modern healthcare platform built with Next.js, React, TypeScript, Tailwind CSS, 
 
 ```
 /
-├── app/                 # Next.js app directory
-│   ├── layout.tsx       # Root layout
-│   ├── page.tsx         # Home page
-│   └── globals.css      # Global styles
-├── components/          # React components
-│   └── ui/              # UI components (shadcn/ui)
-├── lib/                 # Utility functions
-└── public/              # Static assets
+├── app/                      # Next.js pages
+│   ├── layout.tsx            # Root layout
+│   ├── page.tsx              # Homepage with mock appointments
+│   ├── servicios/            # Services page
+│   │   └── page.tsx
+│   └── globals.css           # Global styles (sky/indigo theme)
+├── components/          
+│   ├── ui/                   # shadcn/ui base components
+│   │   ├── button.tsx        # Styled button with variants
+│   │   ├── card.tsx          # Card container with sections
+│   │   └── badge.tsx         # Badge component
+│   ├── layout/               # Layout components
+│   │   ├── header.tsx        # Reusable header with nav
+│   │   └── footer.tsx        # Reusable footer
+│   ├── services/             # Service-related components
+│   │   └── service-card.tsx  # Service display card
+│   ├── appointments/         # Appointment components
+│   │   └── appointment-card.tsx  # Appointment display
+│   └── stats/                # Statistics components
+│       └── stat-card.tsx     # Stat display card
+├── data/                     # Mock data
+│   ├── mock-appointments.ts  # Mock appointment data
+│   └── mock-services.ts      # Mock services data
+├── lib/
+│   └── utils.ts              # Utility functions (cn helper)
+├── types/
+│   └── index.ts              # TypeScript type definitions
+└── public/                   # Static assets
 ```
 
 ## 🛠️ Getting Started
