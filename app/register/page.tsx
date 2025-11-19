@@ -106,17 +106,17 @@ export default function RegisterPage() {
       newErrors.phone = "El teléfono debe tener al menos 8 dígitos";
     }
 
-    // Clinical Information validation
-    if (!mainCondition) newErrors.mainCondition = "Debe seleccionar una condición principal";
+    // Clinical Information validation - TEMPORARILY DISABLED
+    // if (!mainCondition) newErrors.mainCondition = "Debe seleccionar una condición principal";
 
-    // Follow-up Configuration validation
-    const painValue = parseInt(baselinePain);
-    if (isNaN(painValue) || painValue < 0 || painValue > 10) {
-      newErrors.baselinePain = "El valor debe estar entre 0 y 10";
-    }
+    // Follow-up Configuration validation - TEMPORARILY DISABLED
+    // const painValue = parseInt(baselinePain);
+    // if (isNaN(painValue) || painValue < 0 || painValue > 10) {
+    //   newErrors.baselinePain = "El valor debe estar entre 0 y 10";
+    // }
 
-    // Healthcare Contact validation
-    if (!primaryDoctor.trim()) newErrors.primaryDoctor = "El médico tratante es obligatorio";
+    // Healthcare Contact validation - TEMPORARILY DISABLED
+    // if (!primaryDoctor.trim()) newErrors.primaryDoctor = "El médico tratante es obligatorio";
 
     // Consents validation
     if (!consentTerms) newErrors.consentTerms = "Debe aceptar los términos y condiciones";
@@ -134,15 +134,16 @@ export default function RegisterPage() {
       return;
     }
 
-    const reminderTimes = [];
-    if (reminderMorning) reminderTimes.push("mañana");
-    if (reminderAfternoon) reminderTimes.push("tarde");
-    if (reminderEvening) reminderTimes.push("noche");
+    // TEMPORARILY DISABLED - reminder times and notification preferences
+    // const reminderTimes = [];
+    // if (reminderMorning) reminderTimes.push("mañana");
+    // if (reminderAfternoon) reminderTimes.push("tarde");
+    // if (reminderEvening) reminderTimes.push("noche");
 
-    const notificationPreferences = [];
-    if (notifyEmail) notificationPreferences.push("email");
-    if (notifyPush) notificationPreferences.push("push");
-    if (notifyPhone) notificationPreferences.push("teléfono");
+    // const notificationPreferences = [];
+    // if (notifyEmail) notificationPreferences.push("email");
+    // if (notifyPush) notificationPreferences.push("push");
+    // if (notifyPhone) notificationPreferences.push("teléfono");
 
     const payload = {
       fullName,
@@ -152,14 +153,15 @@ export default function RegisterPage() {
       email,
       phone,
       password,
-      mainCondition,
-      conditions,
-      allergies,
-      currentMedications,
-      baselinePain: parseInt(baselinePain),
-      reminderTimes,
-      notificationPreferences,
-      primaryDoctor,
+      // TEMPORARILY DISABLED - clinical information fields
+      // mainCondition,
+      // conditions,
+      // allergies,
+      // currentMedications,
+      // baselinePain: parseInt(baselinePain),
+      // reminderTimes,
+      // notificationPreferences,
+      // primaryDoctor,
       consents: {
         terms: consentTerms,
         dataUse: consentDataUse,
@@ -183,10 +185,11 @@ export default function RegisterPage() {
       password.length >= 8 &&
       phone.trim() &&
       validatePhone(phone) &&
-      mainCondition &&
-      parseInt(baselinePain) >= 0 &&
-      parseInt(baselinePain) <= 10 &&
-      primaryDoctor.trim() &&
+      // TEMPORARILY DISABLED - clinical information validation
+      // mainCondition &&
+      // parseInt(baselinePain) >= 0 &&
+      // parseInt(baselinePain) <= 10 &&
+      // primaryDoctor.trim() &&
       consentTerms &&
       consentDataUse &&
       consentNotifications
@@ -343,7 +346,8 @@ export default function RegisterPage() {
             </CardContent>
           </Card>
 
-          {/* Clinical Information Section */}
+          {/* Clinical Information Section - TEMPORARILY HIDDEN */}
+          {false && (
           <Card className="border-sky-100">
             <CardHeader>
               <CardTitle className="text-sky-900">3. Información Clínica Inicial</CardTitle>
@@ -408,8 +412,10 @@ export default function RegisterPage() {
               </div>
             </CardContent>
           </Card>
+          )}
 
-          {/* Follow-up Configuration Section */}
+          {/* Follow-up Configuration Section - TEMPORARILY HIDDEN */}
+          {false && (
           <Card className="border-indigo-100">
             <CardHeader>
               <CardTitle className="text-indigo-900">4. Configuración de Seguimiento</CardTitle>
@@ -510,8 +516,10 @@ export default function RegisterPage() {
               </div>
             </CardContent>
           </Card>
+          )}
 
-          {/* Healthcare Contact Section */}
+          {/* Healthcare Contact Section - TEMPORARILY HIDDEN */}
+          {false && (
           <Card className="border-sky-100">
             <CardHeader>
               <CardTitle className="text-sky-900">5. Contacto Asistencial</CardTitle>
@@ -533,11 +541,12 @@ export default function RegisterPage() {
               </div>
             </CardContent>
           </Card>
+          )}
 
           {/* Consents Section */}
           <Card className="border-indigo-100">
             <CardHeader>
-              <CardTitle className="text-indigo-900">6. Consentimientos</CardTitle>
+              <CardTitle className="text-indigo-900">3. Consentimientos</CardTitle>
               <CardDescription>Todos los consentimientos son obligatorios</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
