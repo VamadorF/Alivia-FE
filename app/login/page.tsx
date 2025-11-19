@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -64,38 +66,43 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-10">
+      <header className="border-b bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600" />
-            <span className="text-xl font-bold bg-gradient-to-r from-sky-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-400 dark:to-indigo-400 bg-clip-text text-transparent">
               Alivia
             </span>
           </div>
-          <Button variant="ghost" onClick={() => window.location.href = "/"}>
-            Volver al Inicio
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Link href="/">
+              <Button variant="ghost">
+                Volver al Inicio
+              </Button>
+            </Link>
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-12 flex items-center justify-center min-h-[calc(100vh-200px)]">
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md animate-fade-in-up">
           <div className="mb-8 text-center">
-            <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-sky-600 to-indigo-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-400 dark:to-indigo-400 bg-clip-text text-transparent">
               Iniciar Sesión
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground dark:text-slate-300">
               Accede a tu cuenta de AlivIA
             </p>
           </div>
 
-          <Card className="border-sky-100 shadow-lg">
+          <Card className="border-sky-100 dark:border-slate-700 dark:bg-slate-800 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-sky-900">Bienvenido de vuelta</CardTitle>
-              <CardDescription>Ingresa tus credenciales para continuar</CardDescription>
+              <CardTitle className="text-sky-900 dark:text-sky-300">Bienvenido de vuelta</CardTitle>
+              <CardDescription className="dark:text-slate-400">Ingresa tus credenciales para continuar</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -147,22 +154,17 @@ export default function LoginPage() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-sky-600 to-indigo-600"
+                  className="w-full bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-500 dark:to-indigo-500 hover:scale-105 transition-transform duration-200"
                   disabled={!isFormValid()}
                 >
                   Iniciar Sesión
                 </Button>
 
-                <div className="text-center text-sm text-muted-foreground">
+                <div className="text-center text-sm text-muted-foreground dark:text-slate-400">
                   ¿No tienes una cuenta?{" "}
-                  <Button
-                    variant="link"
-                    className="p-0 h-auto text-sky-600"
-                    type="button"
-                    onClick={() => window.location.href = "/register"}
-                  >
+                  <Link href="/register" className="text-sky-600 dark:text-sky-400 hover:underline">
                     Regístrate aquí
-                  </Button>
+                  </Link>
                 </div>
               </form>
             </CardContent>
@@ -205,8 +207,8 @@ export default function LoginPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t bg-white/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-8 text-center text-muted-foreground">
+      <footer className="border-t bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-8 text-center text-muted-foreground dark:text-slate-400">
           <p>&copy; 2025 Alivia. Todos los derechos reservados.</p>
         </div>
       </footer>

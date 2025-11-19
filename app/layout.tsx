@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Alivia - Healthcare Platform",
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <body className="antialiased">
-        {children}
+        <ThemeProvider defaultTheme="system" storageKey="alivia-ui-theme">
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
