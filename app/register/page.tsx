@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +9,6 @@ import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function RegisterPage() {
   // Identity section
@@ -196,44 +194,39 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50">
       {/* Header */}
-      <header className="border-b bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm sticky top-0 z-10">
+      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600" />
-            <span className="text-xl font-bold bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-400 dark:to-indigo-400 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-sky-600 to-indigo-600 bg-clip-text text-transparent">
               Alivia
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <Link href="/">
-              <Button variant="ghost">
-                Volver al Inicio
-              </Button>
-            </Link>
-          </div>
+          <Button variant="ghost" onClick={() => window.location.href = "/"}>
+            Volver al Inicio
+          </Button>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="mb-8 text-center animate-fade-in">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-400 dark:to-indigo-400 bg-clip-text text-transparent">
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-sky-600 to-indigo-600 bg-clip-text text-transparent">
             Registro de Usuario
           </h1>
-          <p className="text-muted-foreground dark:text-slate-300">
+          <p className="text-muted-foreground">
             Completa tu perfil para acceder a todas las funcionalidades de AlivIA
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Identity Section */}
-          <Card className="border-sky-100 dark:border-slate-700 dark:bg-slate-800 animate-fade-in-up">
+          <Card className="border-sky-100">
             <CardHeader>
-              <CardTitle className="text-sky-900 dark:text-sky-300">1. Identidad</CardTitle>
-              <CardDescription className="dark:text-slate-400">Información personal básica</CardDescription>
+              <CardTitle className="text-sky-900">1. Identidad</CardTitle>
+              <CardDescription>Información personal básica</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -297,10 +290,10 @@ export default function RegisterPage() {
           </Card>
 
           {/* Contact Section */}
-          <Card className="border-indigo-100 dark:border-slate-700 dark:bg-slate-800 animate-fade-in-up animation-delay-100">
+          <Card className="border-indigo-100">
             <CardHeader>
-              <CardTitle className="text-indigo-900 dark:text-indigo-300">2. Contacto</CardTitle>
-              <CardDescription className="dark:text-slate-400">Información de contacto y acceso</CardDescription>
+              <CardTitle className="text-indigo-900">2. Contacto</CardTitle>
+              <CardDescription>Información de contacto y acceso</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -351,10 +344,10 @@ export default function RegisterPage() {
           </Card>
 
           {/* Clinical Information Section */}
-          <Card className="border-sky-100 dark:border-slate-700 dark:bg-slate-800 animate-fade-in-up animation-delay-200">
+          <Card className="border-sky-100">
             <CardHeader>
-              <CardTitle className="text-sky-900 dark:text-sky-300">3. Información Clínica Inicial</CardTitle>
-              <CardDescription className="dark:text-slate-400">Datos médicos relevantes para tu seguimiento</CardDescription>
+              <CardTitle className="text-sky-900">3. Información Clínica Inicial</CardTitle>
+              <CardDescription>Datos médicos relevantes para tu seguimiento</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -417,10 +410,10 @@ export default function RegisterPage() {
           </Card>
 
           {/* Follow-up Configuration Section */}
-          <Card className="border-indigo-100 dark:border-slate-700 dark:bg-slate-800 animate-fade-in-up animation-delay-300">
+          <Card className="border-indigo-100">
             <CardHeader>
-              <CardTitle className="text-indigo-900 dark:text-indigo-300">4. Configuración de Seguimiento</CardTitle>
-              <CardDescription className="dark:text-slate-400">Personaliza tu experiencia de seguimiento</CardDescription>
+              <CardTitle className="text-indigo-900">4. Configuración de Seguimiento</CardTitle>
+              <CardDescription>Personaliza tu experiencia de seguimiento</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-3">
@@ -435,7 +428,7 @@ export default function RegisterPage() {
                     step={1}
                     aria-label="Nivel de dolor basal"
                   />
-                  <span className="text-2xl font-bold text-sky-600 dark:text-sky-400 min-w-[2rem] text-center">
+                  <span className="text-2xl font-bold text-sky-600 min-w-[2rem] text-center">
                     {baselinePain}
                   </span>
                 </div>
@@ -519,10 +512,10 @@ export default function RegisterPage() {
           </Card>
 
           {/* Healthcare Contact Section */}
-          <Card className="border-sky-100 dark:border-slate-700 dark:bg-slate-800 animate-fade-in-up animation-delay-400">
+          <Card className="border-sky-100">
             <CardHeader>
-              <CardTitle className="text-sky-900 dark:text-sky-300">5. Contacto Asistencial</CardTitle>
-              <CardDescription className="dark:text-slate-400">Información de tu equipo médico</CardDescription>
+              <CardTitle className="text-sky-900">5. Contacto Asistencial</CardTitle>
+              <CardDescription>Información de tu equipo médico</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -542,21 +535,21 @@ export default function RegisterPage() {
           </Card>
 
           {/* Consents Section */}
-          <Card className="border-indigo-100 dark:border-slate-700 dark:bg-slate-800 animate-fade-in-up animation-delay-400">
+          <Card className="border-indigo-100">
             <CardHeader>
-              <CardTitle className="text-indigo-900 dark:text-indigo-300">6. Consentimientos</CardTitle>
-              <CardDescription className="dark:text-slate-400">Todos los consentimientos son obligatorios</CardDescription>
+              <CardTitle className="text-indigo-900">6. Consentimientos</CardTitle>
+              <CardDescription>Todos los consentimientos son obligatorios</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-4">
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-sky-50 dark:bg-sky-900/20">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-sky-50">
                   <Checkbox
                     id="consentTerms"
                     checked={consentTerms}
                     onChange={(e) => setConsentTerms(e.target.checked)}
                   />
                   <div className="flex-1">
-                    <Label htmlFor="consentTerms" className="cursor-pointer font-normal dark:text-slate-300">
+                    <Label htmlFor="consentTerms" className="cursor-pointer font-normal">
                       Acepto los términos y condiciones de uso de la plataforma AlivIA *
                     </Label>
                     {errors.consentTerms && (
@@ -565,14 +558,14 @@ export default function RegisterPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-indigo-50 dark:bg-indigo-900/20">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-indigo-50">
                   <Checkbox
                     id="consentDataUse"
                     checked={consentDataUse}
                     onChange={(e) => setConsentDataUse(e.target.checked)}
                   />
                   <div className="flex-1">
-                    <Label htmlFor="consentDataUse" className="cursor-pointer font-normal dark:text-slate-300">
+                    <Label htmlFor="consentDataUse" className="cursor-pointer font-normal">
                       Autorizo el tratamiento de mis datos clínicos para fines de seguimiento y personalización del servicio *
                     </Label>
                     {errors.consentDataUse && (
@@ -581,14 +574,14 @@ export default function RegisterPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-sky-50 dark:bg-sky-900/20">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-sky-50">
                   <Checkbox
                     id="consentNotifications"
                     checked={consentNotifications}
                     onChange={(e) => setConsentNotifications(e.target.checked)}
                   />
                   <div className="flex-1">
-                    <Label htmlFor="consentNotifications" className="cursor-pointer font-normal dark:text-slate-300">
+                    <Label htmlFor="consentNotifications" className="cursor-pointer font-normal">
                       Acepto recibir recordatorios y alertas relacionadas con mi seguimiento de salud *
                     </Label>
                     {errors.consentNotifications && (
@@ -605,7 +598,7 @@ export default function RegisterPage() {
             <Button
               type="submit"
               size="lg"
-              className="bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-500 dark:to-indigo-500 px-12 hover:scale-105 transition-transform duration-200"
+              className="bg-gradient-to-r from-sky-600 to-indigo-600 px-12"
               disabled={!isFormValid()}
             >
               Crear Cuenta
@@ -615,8 +608,8 @@ export default function RegisterPage() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-20 border-t bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-8 text-center text-muted-foreground dark:text-slate-400">
+      <footer className="mt-20 border-t bg-white/50 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-8 text-center text-muted-foreground">
           <p>&copy; 2025 Alivia. Todos los derechos reservados.</p>
         </div>
       </footer>
