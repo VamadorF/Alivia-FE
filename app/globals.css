@@ -24,13 +24,13 @@
 }
 
 .dark {
-  --background: 222.2 47.4% 3.2%;
+  --background: 222.2 84% 4.9%;
   --foreground: 210 40% 98%;
-  --card: 222.2 47.4% 6.5%;
+  --card: 222.2 84% 4.9%;
   --card-foreground: 210 40% 98%;
-  --popover: 222.2 47.4% 6.5%;
+  --popover: 222.2 84% 4.9%;
   --popover-foreground: 210 40% 98%;
-  --primary: 200.6 98% 59.4%;
+  --primary: 217.2 91.2% 59.8%;
   --primary-foreground: 222.2 47.4% 11.2%;
   --secondary: 217.2 32.6% 17.5%;
   --secondary-foreground: 210 40% 98%;
@@ -52,51 +52,4 @@
 body {
   background: hsl(var(--background));
   color: hsl(var(--foreground));
-}
-
-/* Animation Keyframes */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Animation Classes */
-.animate-fade-in-up {
-  animation: fade-in-up 0.6s ease-out;
-}
-
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out;
-}
-
-/* Stagger delays for sequential animations */
-.animation-delay-100 {
-  animation-delay: 0.1s;
-}
-
-.animation-delay-200 {
-  animation-delay: 0.2s;
-}
-
-.animation-delay-300 {
-  animation-delay: 0.3s;
-}
-
-.animation-delay-400 {
-  animation-delay: 0.4s;
 }
