@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ThemeToggle } from "@/components/theme-toggle";
 import Link from "next/link";
 
 // Mock data - Tipos de servicios médicos
@@ -83,13 +84,13 @@ const medicalServices = [
 
 export default function ServiciosPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm">
+      <header className="border-b bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600" />
-            <span className="text-xl font-bold bg-gradient-to-r from-sky-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-400 dark:to-indigo-400 bg-clip-text text-transparent">
               Alivia
             </span>
           </Link>
@@ -100,9 +101,14 @@ export default function ServiciosPage() {
             <Button variant="ghost">Médicos</Button>
             <Button variant="ghost">Contacto</Button>
           </nav>
-          <div className="flex gap-2">
-            <Button variant="outline">Iniciar Sesión</Button>
-            <Button>Agendar Cita</Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Link href="/login">
+              <Button variant="outline">Iniciar Sesión</Button>
+            </Link>
+            <Link href="/register">
+              <Button className="bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-500 dark:to-indigo-500">Crear Cuenta</Button>
+            </Link>
           </div>
         </div>
       </header>
@@ -110,42 +116,42 @@ export default function ServiciosPage() {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-12">
         {/* Hero Section */}
-        <section className="mb-16 text-center">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-sky-600 to-indigo-600 bg-clip-text text-transparent">
+        <section className="mb-16 text-center animate-fade-in-up">
+          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-400 dark:to-indigo-400 bg-clip-text text-transparent">
             Nuestros Servicios
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground dark:text-slate-300 max-w-2xl mx-auto">
             Amplia gama de servicios médicos diseñados para cuidar tu salud y bienestar
           </p>
         </section>
 
         {/* Services by Category */}
-        {medicalServices.map((category) => (
-          <section key={category.id} className="mb-12">
-            <h2 className="text-3xl font-bold mb-6 text-sky-900">{category.category}</h2>
+        {medicalServices.map((category, idx) => (
+          <section key={category.id} className={`mb-12 animate-fade-in-up animation-delay-${(idx + 1) * 100}`}>
+            <h2 className="text-3xl font-bold mb-6 text-sky-900 dark:text-sky-300">{category.category}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {category.services.map((service) => (
                 <Card
                   key={service.id}
-                  className="border-sky-100 shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                  className="border-sky-100 dark:border-slate-700 dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all hover:scale-105 duration-300"
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between">
-                      <CardTitle className="text-indigo-900">{service.name}</CardTitle>
+                      <CardTitle className="text-indigo-900 dark:text-indigo-300">{service.name}</CardTitle>
                       {service.badge && (
-                        <Badge className="bg-sky-100 text-sky-700 border-sky-200">
+                        <Badge className="bg-sky-100 text-sky-700 border-sky-200 dark:bg-sky-900/30 dark:text-sky-300 dark:border-sky-700">
                           {service.badge}
                         </Badge>
                       )}
                     </div>
-                    <CardDescription>{service.description}</CardDescription>
+                    <CardDescription className="dark:text-slate-400">{service.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-sm text-muted-foreground">⏱️ {service.duration}</span>
-                      <span className="text-lg font-bold text-indigo-600">{service.price}</span>
+                      <span className="text-sm text-muted-foreground dark:text-slate-400">⏱️ {service.duration}</span>
+                      <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">{service.price}</span>
                     </div>
-                    <Button className="w-full bg-gradient-to-r from-sky-500 to-indigo-600">
+                    <Button className="w-full bg-gradient-to-r from-sky-500 to-indigo-600 dark:from-sky-500 dark:to-indigo-500 hover:scale-105 transition-transform duration-200">
                       Agendar Ahora
                     </Button>
                   </CardContent>
@@ -156,20 +162,20 @@ export default function ServiciosPage() {
         ))}
 
         {/* CTA Section */}
-        <section className="mt-16 text-center">
-          <Card className="border-indigo-200 bg-gradient-to-br from-sky-50 to-indigo-50">
+        <section className="mt-16 text-center animate-fade-in-up animation-delay-400">
+          <Card className="border-indigo-200 dark:border-slate-700 bg-gradient-to-br from-sky-50 to-indigo-50 dark:from-slate-800 dark:to-slate-800">
             <CardHeader>
-              <CardTitle className="text-3xl text-sky-900">¿No encuentras lo que buscas?</CardTitle>
-              <CardDescription className="text-lg">
+              <CardTitle className="text-3xl text-sky-900 dark:text-sky-300">¿No encuentras lo que buscas?</CardTitle>
+              <CardDescription className="text-lg dark:text-slate-400">
                 Contáctanos y te ayudaremos a encontrar el servicio médico que necesitas
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex gap-4 justify-center">
-                <Button size="lg" className="bg-gradient-to-r from-sky-600 to-indigo-600">
+              <div className="flex gap-4 justify-center flex-wrap">
+                <Button size="lg" className="bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-500 dark:to-indigo-500 hover:scale-105 transition-transform duration-200">
                   Contactar Ahora
                 </Button>
-                <Button size="lg" variant="outline" asChild>
+                <Button size="lg" variant="outline" asChild className="hover:scale-105 transition-transform duration-200">
                   <Link href="/">Volver al Inicio</Link>
                 </Button>
               </div>
@@ -179,8 +185,8 @@ export default function ServiciosPage() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-20 border-t bg-white/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-8 text-center text-muted-foreground">
+      <footer className="mt-20 border-t bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-8 text-center text-muted-foreground dark:text-slate-400">
           <p>&copy; 2025 Alivia. Todos los derechos reservados.</p>
         </div>
       </footer>
