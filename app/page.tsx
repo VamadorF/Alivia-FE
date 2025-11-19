@@ -1,6 +1,19 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { 
+  Calendar, 
+  Clock, 
+  Pill, 
+  CalendarDays, 
+  MessageCircle, 
+  Users, 
+  Heart,
+  Activity,
+  Stethoscope,
+  Video,
+  UserCheck
+} from "lucide-react";
 
 // Mock data
 const featuredServices = [
@@ -11,6 +24,7 @@ const featuredServices = [
     duration: "30 min",
     price: "$45.000",
     available: true,
+    icon: "stethoscope",
   },
   {
     id: 2,
@@ -19,6 +33,7 @@ const featuredServices = [
     duration: "45 min",
     price: "$65.000",
     available: true,
+    icon: "activity",
   },
   {
     id: 3,
@@ -27,6 +42,7 @@ const featuredServices = [
     duration: "20 min",
     price: "$35.000",
     available: true,
+    icon: "video",
   },
 ];
 
@@ -115,8 +131,14 @@ export default function Home() {
                   </CardHeader>
                   <CardContent>
                     <div className="flex gap-4 text-sm text-muted-foreground">
-                      <span>📅 {appointment.date}</span>
-                      <span>🕐 {appointment.time}</span>
+                      <span className="flex items-center gap-1">
+                        <Calendar className="h-4 w-4" />
+                        {appointment.date}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        {appointment.time}
+                      </span>
                     </div>
                     <div className="mt-4 flex gap-2">
                       <Button size="sm" variant="outline">Ver Detalles</Button>
@@ -133,23 +155,114 @@ export default function Home() {
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-6 text-sky-900">Servicios Destacados</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            {featuredServices.map((service) => (
-              <Card key={service.id} className="border-indigo-100 shadow-lg hover:shadow-xl transition-shadow">
-                <CardHeader>
-                  <CardTitle className="text-indigo-900">{service.title}</CardTitle>
-                  <CardDescription>{service.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm text-muted-foreground">⏱️ {service.duration}</span>
-                    <span className="text-lg font-bold text-indigo-600">{service.price}</span>
-                  </div>
-                  <Button className="w-full bg-gradient-to-r from-sky-500 to-indigo-600" disabled={!service.available}>
-                    {service.available ? "Agendar Ahora" : "No Disponible"}
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+            {featuredServices.map((service) => {
+              const ServiceIcon = 
+                service.icon === "stethoscope" ? Stethoscope :
+                service.icon === "activity" ? Activity :
+                service.icon === "video" ? Video : Stethoscope;
+              
+              return (
+                <Card key={service.id} className="border-indigo-100 shadow-lg hover:shadow-xl transition-shadow">
+                  <CardHeader>
+                    <div className="mb-3 h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center">
+                      <ServiceIcon className="h-6 w-6 text-indigo-600" />
+                    </div>
+                    <CardTitle className="text-indigo-900">{service.title}</CardTitle>
+                    <CardDescription>{service.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="flex items-center gap-1 text-sm text-muted-foreground">
+                        <Clock className="h-4 w-4" />
+                        {service.duration}
+                      </span>
+                      <span className="text-lg font-bold text-indigo-600">{service.price}</span>
+                    </div>
+                    <Button className="w-full bg-gradient-to-r from-sky-500 to-indigo-600" disabled={!service.available}>
+                      {service.available ? "Agendar Ahora" : "No Disponible"}
+                    </Button>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Lo que encontrarás Section */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold mb-6 text-center text-sky-900">Lo que encontrarás</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Panel de control de medicamentos */}
+            <Card className="border-sky-100 shadow-lg hover:shadow-xl transition-all hover:scale-105">
+              <CardHeader className="text-center">
+                <div className="mx-auto mb-4 h-16 w-16 rounded-2xl bg-gradient-to-br from-sky-100 to-sky-200 flex items-center justify-center">
+                  <Pill className="h-8 w-8 text-sky-600" />
+                </div>
+                <CardTitle className="text-lg text-sky-900">Panel de control de medicamentos</CardTitle>
+                <CardDescription className="font-semibold text-indigo-700">
+                  Medicamentos bajo control
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-sm text-muted-foreground">
+                  Recordatorios, renovaciones y alertas críticas.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Calendario de salud */}
+            <Card className="border-indigo-100 shadow-lg hover:shadow-xl transition-all hover:scale-105">
+              <CardHeader className="text-center">
+                <div className="mx-auto mb-4 h-16 w-16 rounded-2xl bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center">
+                  <CalendarDays className="h-8 w-8 text-indigo-600" />
+                </div>
+                <CardTitle className="text-lg text-indigo-900">Calendario de salud</CardTitle>
+                <CardDescription className="font-semibold text-sky-700">
+                  Calendario de salud integral
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-sm text-muted-foreground">
+                  Citas, tomas y licencias en un solo lugar.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Chat de diario */}
+            <Card className="border-sky-100 shadow-lg hover:shadow-xl transition-all hover:scale-105">
+              <CardHeader className="text-center">
+                <div className="mx-auto mb-4 h-16 w-16 rounded-2xl bg-gradient-to-br from-sky-100 to-sky-200 flex items-center justify-center">
+                  <MessageCircle className="h-8 w-8 text-sky-600" />
+                </div>
+                <CardTitle className="text-lg text-sky-900">Chat de diario</CardTitle>
+                <CardDescription className="font-semibold text-indigo-700">
+                  Mi Historia (diario conversado)
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-sm text-muted-foreground">
+                  Registra tu día y recibe contención real.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Foros de apoyo */}
+            <Card className="border-indigo-100 shadow-lg hover:shadow-xl transition-all hover:scale-105">
+              <CardHeader className="text-center">
+                <div className="mx-auto mb-4 h-16 w-16 rounded-2xl bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center">
+                  <Users className="h-8 w-8 text-indigo-600" />
+                </div>
+                <CardTitle className="text-lg text-indigo-900">Foros de apoyo</CardTitle>
+                <CardDescription className="font-semibold text-sky-700">
+                  Foros con propósito
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-sm text-muted-foreground">
+                  Comunidades moderadas y seguras.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </section>
 
@@ -157,24 +270,36 @@ export default function Home() {
         <section className="grid md:grid-cols-4 gap-6">
           <Card className="text-center border-sky-100">
             <CardHeader>
+              <div className="mx-auto mb-2 h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center">
+                <Stethoscope className="h-6 w-6 text-sky-600" />
+              </div>
               <CardTitle className="text-4xl font-bold text-sky-600">50+</CardTitle>
               <CardDescription>Médicos Especialistas</CardDescription>
             </CardHeader>
           </Card>
           <Card className="text-center border-indigo-100">
             <CardHeader>
+              <div className="mx-auto mb-2 h-12 w-12 rounded-xl bg-indigo-100 flex items-center justify-center">
+                <UserCheck className="h-6 w-6 text-indigo-600" />
+              </div>
               <CardTitle className="text-4xl font-bold text-indigo-600">1000+</CardTitle>
               <CardDescription>Pacientes Atendidos</CardDescription>
             </CardHeader>
           </Card>
           <Card className="text-center border-sky-100">
             <CardHeader>
+              <div className="mx-auto mb-2 h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center">
+                <Activity className="h-6 w-6 text-sky-600" />
+              </div>
               <CardTitle className="text-4xl font-bold text-sky-600">24/7</CardTitle>
               <CardDescription>Disponibilidad</CardDescription>
             </CardHeader>
           </Card>
           <Card className="text-center border-indigo-100">
             <CardHeader>
+              <div className="mx-auto mb-2 h-12 w-12 rounded-xl bg-indigo-100 flex items-center justify-center">
+                <Heart className="h-6 w-6 text-indigo-600" />
+              </div>
               <CardTitle className="text-4xl font-bold text-indigo-600">98%</CardTitle>
               <CardDescription>Satisfacción</CardDescription>
             </CardHeader>
