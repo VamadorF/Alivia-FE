@@ -52,7 +52,30 @@ export default function LoginPage() {
     };
 
     console.log("Login Payload:", payload);
-    alert("Inicio de sesión exitoso. Revisa la consola para ver los datos.");
+    
+    // Mock authentication - check if user exists in localStorage
+    const storedEmail = localStorage.getItem("userEmail");
+    const storedUserType = localStorage.getItem("userType");
+    
+    if (storedEmail === email) {
+      // User found, redirect based on type
+      const userType = storedUserType || "patient"; // default to patient if not found
+      localStorage.setItem("isAuthenticated", "true");
+      
+      if (userType === "patient") {
+        window.location.href = "/dashboard/patient";
+      } else if (userType === "professional") {
+        window.location.href = "/dashboard/professional";
+      }
+    } else {
+      // Mock: for demonstration, default to patient dashboard
+      // In real implementation, this would be handled by backend
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("userEmail", email);
+      localStorage.setItem("userType", "patient");
+      alert("Inicio de sesión exitoso. Revisa la consola para ver los datos.");
+      window.location.href = "/dashboard/patient";
+    }
   };
 
   const isFormValid = () => {
