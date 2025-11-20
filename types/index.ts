@@ -64,3 +64,37 @@ export interface StatCard {
   label: string;
   color: "sky" | "indigo";
 }
+
+export type UserType = "patient" | "professional";
+
+export type ProfessionType = 
+  | "Médico"
+  | "Kinesiólogo"
+  | "Psicólogo"
+  | "Psiquiatra"
+  | "Nutricionista"
+  | "Enfermero"
+  | "Terapeuta Ocupacional"
+  | "Otro";
+
+export interface ProfessionalData {
+  professionType: ProfessionType;
+  professionalID?: string;
+}
+
+export interface RegistrationPayload {
+  fullName: string;
+  rut: string;
+  birthDate: string;
+  gender?: string;
+  email: string;
+  phone: string;
+  password: string;
+  userType: UserType;
+  professionalData: ProfessionalData | null;
+  consents: {
+    terms: boolean;
+    dataUse: boolean;
+    notifications: boolean;
+  };
+}

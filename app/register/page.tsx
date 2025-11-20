@@ -9,6 +9,7 @@ import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
+import { UserType, ProfessionType, RegistrationPayload } from "@/types";
 
 export default function RegisterPage() {
   // Identity section
@@ -21,6 +22,11 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+
+  // User Type section
+  const [userType, setUserType] = useState<UserType | "">("");
+  const [professionType, setProfessionType] = useState<ProfessionType | "">("");
+  const [professionalID, setProfessionalID] = useState("");
 
   // Clinical Information section
   const [mainCondition, setMainCondition] = useState("");
@@ -106,6 +112,13 @@ export default function RegisterPage() {
       newErrors.phone = "El teléfono debe tener al menos 8 dígitos";
     }
 
+    // User Type validation
+    if (!userType) {
+      newErrors.userType = "El tipo de usuario es obligatorio";
+    } else if (userType === "professional" && !professionType) {
+      newErrors.professionType = "El tipo de profesión es obligatorio";
+    }
+
     // Clinical Information validation - TEMPORARILY DISABLED
     // if (!mainCondition) newErrors.mainCondition = "Debe seleccionar una condición principal";
 
@@ -145,7 +158,7 @@ export default function RegisterPage() {
     // if (notifyPush) notificationPreferences.push("push");
     // if (notifyPhone) notificationPreferences.push("teléfono");
 
-    const payload = {
+    const payload: RegistrationPayload = {
       fullName,
       rut,
       birthDate,
@@ -153,6 +166,13 @@ export default function RegisterPage() {
       email,
       phone,
       password,
+      userType: userType as UserType,
+      professionalData: userType === "professional" && professionType
+        ? {
+            professionType: professionType as ProfessionType,
+            professionalID: professionalID || undefined,
+          }
+        : null,
       // TEMPORARILY DISABLED - clinical information fields
       // mainCondition,
       // conditions,
@@ -170,7 +190,20 @@ export default function RegisterPage() {
     };
 
     console.log("Payload:", payload);
+    
+    // Store user data in localStorage (mock authentication)
+    localStorage.setItem("userEmail", email);
+    localStorage.setItem("userType", userType);
+    localStorage.setItem("userName", fullName);
+    
     alert("Registro exitoso. Revisa la consola para ver los datos.");
+    
+    // Redirect to appropriate dashboard based on user type
+    if (userType === "patient") {
+      window.location.href = "/dashboard/patient";
+    } else if (userType === "professional") {
+      window.location.href = "/dashboard/professional";
+    }
   };
 
   const isFormValid = () => {
@@ -185,6 +218,8 @@ export default function RegisterPage() {
       password.length >= 8 &&
       phone.trim() &&
       validatePhone(phone) &&
+      userType &&
+      (userType === "patient" || (userType === "professional" && professionType)) &&
       // TEMPORARILY DISABLED - clinical information validation
       // mainCondition &&
       // parseInt(baselinePain) >= 0 &&
@@ -343,6 +378,81 @@ export default function RegisterPage() {
                   <p className="text-xs text-red-500">{errors.phone}</p>
                 )}
               </div>
+            </CardContent>
+          </Card>
+
+          {/* User Type Section */}
+          <Card className="border-sky-100">
+            <CardHeader>
+              <CardTitle className="text-sky-900">3. Tipo de Usuario</CardTitle>
+              <CardDescription>Selecciona el tipo de cuenta que deseas crear</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="userType">Tipo de Usuario *</Label>
+                <Select
+                  id="userType"
+                  value={userType}
+                  onChange={(e) => {
+                    setUserType(e.target.value as UserType);
+                    // Reset professional fields when switching to patient
+                    if (e.target.value === "patient") {
+                      setProfessionType("");
+                      setProfessionalID("");
+                    }
+                  }}
+                  aria-label="Tipo de usuario"
+                >
+                  <option value="">Seleccionar...</option>
+                  <option value="patient">Paciente</option>
+                  <option value="professional">Profesional de la Salud</option>
+                </Select>
+                {errors.userType && (
+                  <p className="text-xs text-red-500">{errors.userType}</p>
+                )}
+              </div>
+
+              {/* Professional fields - shown only when professional is selected */}
+              {userType === "professional" && (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="professionType">Tipo de Profesión *</Label>
+                    <Select
+                      id="professionType"
+                      value={professionType}
+                      onChange={(e) => setProfessionType(e.target.value as ProfessionType)}
+                      aria-label="Tipo de profesión"
+                    >
+                      <option value="">Seleccionar...</option>
+                      <option value="Médico">Médico</option>
+                      <option value="Kinesiólogo">Kinesiólogo</option>
+                      <option value="Psicólogo">Psicólogo</option>
+                      <option value="Psiquiatra">Psiquiatra</option>
+                      <option value="Nutricionista">Nutricionista</option>
+                      <option value="Enfermero">Enfermero</option>
+                      <option value="Terapeuta Ocupacional">Terapeuta Ocupacional</option>
+                      <option value="Otro">Otro</option>
+                    </Select>
+                    {errors.professionType && (
+                      <p className="text-xs text-red-500">{errors.professionType}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="professionalID">Número de Registro Profesional (Opcional)</Label>
+                    <Input
+                      id="professionalID"
+                      value={professionalID}
+                      onChange={(e) => setProfessionalID(e.target.value)}
+                      placeholder="Ej: Número de RUN profesional, matrícula, etc."
+                      aria-label="Número de registro profesional"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Ej.: Número de registro, RUN profesional u otro identificador
+                    </p>
+                  </div>
+                </>
+              )}
             </CardContent>
           </Card>
 
@@ -546,7 +656,7 @@ export default function RegisterPage() {
           {/* Consents Section */}
           <Card className="border-indigo-100">
             <CardHeader>
-              <CardTitle className="text-indigo-900">3. Consentimientos</CardTitle>
+              <CardTitle className="text-indigo-900">4. Consentimientos</CardTitle>
               <CardDescription>Todos los consentimientos son obligatorios</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
