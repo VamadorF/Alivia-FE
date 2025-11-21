@@ -22,7 +22,7 @@ export function QuickRegisterCard() {
             Dolor y ánimo, en menos de 30 segundos.
           </p>
           <Button
-            onClick={() => router.push("/pain-report")}
+            onClick={() => router.push("/daily-tracking")}
             className="bg-sky-600 hover:bg-sky-700 text-white"
           >
             Empezar
