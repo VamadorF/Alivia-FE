@@ -83,7 +83,7 @@ export function DailyFactorsForm({ onSubmit }: DailyFactorsFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form id="daily-factors-form" onSubmit={handleSubmit} className="space-y-6">
       {/* Exercise */}
       <Card className="border-sky-200">
         <CardHeader>
