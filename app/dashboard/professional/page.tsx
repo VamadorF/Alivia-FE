@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertPanel } from "@/components/professional/alert-panel";
 import { PainTrendChart } from "@/components/professional/pain-trend-chart";
+import { ReferralForm } from "@/components/professional/referral-form";
 import { mockPatientAlerts, mockPainTrends, getUnacknowledgedAlerts } from "@/data/professional";
 import { PatientAlert } from "@/types";
 import { Users, Activity, AlertTriangle, TrendingUp } from "lucide-react";
@@ -12,6 +13,8 @@ import { Users, Activity, AlertTriangle, TrendingUp } from "lucide-react";
 export default function ProfessionalDashboard() {
   const userName = typeof window !== "undefined" ? localStorage.getItem("userName") || "Usuario" : "Usuario";
   const [alerts, setAlerts] = useState(mockPatientAlerts);
+  const [showReferralForm, setShowReferralForm] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState<{ name: string; id: string } | null>(null);
 
   const handleLogout = () => {
     if (typeof window !== "undefined") {
@@ -26,6 +29,13 @@ export default function ProfessionalDashboard() {
         alert.id === alertId ? { ...alert, acknowledged: true } : alert
       )
     );
+  };
+
+  const handleReferralSubmit = (referralData: unknown) => {
+    console.log("Referral submitted:", referralData);
+    setShowReferralForm(false);
+    setSelectedPatient(null);
+    alert("✅ Derivación registrada exitosamente");
   };
 
   const unacknowledgedCount = getUnacknowledgedAlerts().length;
@@ -144,7 +154,14 @@ export default function ProfessionalDashboard() {
                 <Button variant="outline" className="w-full">
                   Notas Clínicas
                 </Button>
-                <Button variant="outline" className="w-full border-red-300 text-red-700 hover:bg-red-50">
+                <Button 
+                  variant="outline" 
+                  className="w-full border-red-300 text-red-700 hover:bg-red-50"
+                  onClick={() => {
+                    setSelectedPatient({ name: "María González", id: "patient-001" });
+                    setShowReferralForm(true);
+                  }}
+                >
                   Registrar Derivación
                 </Button>
               </CardContent>
@@ -202,6 +219,19 @@ export default function ProfessionalDashboard() {
           </CardContent>
         </Card>
       </main>
+
+      {/* Referral Form Modal */}
+      {showReferralForm && selectedPatient && (
+        <ReferralForm
+          patientName={selectedPatient.name}
+          patientId={selectedPatient.id}
+          onSubmit={handleReferralSubmit}
+          onCancel={() => {
+            setShowReferralForm(false);
+            setSelectedPatient(null);
+          }}
+        />
+      )}
     </div>
   );
 }
