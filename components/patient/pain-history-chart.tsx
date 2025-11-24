@@ -21,8 +21,16 @@ export function PainHistoryChart({ data, stressData }: PainHistoryChartProps) {
 
   // Calculate trend
   const recentData = data.slice(-7);
-  const avgFirst = recentData.slice(0, 3).reduce((sum, d) => sum + d.intensity, 0) / 3;
-  const avgLast = recentData.slice(-3).reduce((sum, d) => sum + d.intensity, 0) / 3;
+  const avgFirst = recentData.length >= 3 
+    ? recentData.slice(0, 3).reduce((sum, d) => sum + d.intensity, 0) / 3 
+    : recentData.length > 0 
+    ? recentData.reduce((sum, d) => sum + d.intensity, 0) / recentData.length 
+    : 0;
+  const avgLast = recentData.length >= 3 
+    ? recentData.slice(-3).reduce((sum, d) => sum + d.intensity, 0) / 3 
+    : recentData.length > 0 
+    ? recentData.reduce((sum, d) => sum + d.intensity, 0) / recentData.length 
+    : 0;
   const trend = avgLast > avgFirst + 0.5 ? "increasing" : avgLast < avgFirst - 0.5 ? "decreasing" : "stable";
 
   const getTrendIcon = () => {
@@ -148,16 +156,20 @@ export function PainHistoryChart({ data, stressData }: PainHistoryChartProps) {
         <div className="grid grid-cols-3 gap-4 pt-4 border-t border-sky-200">
           <div className="text-center">
             <div className="text-2xl font-bold text-sky-600">
-              {(data.reduce((sum, d) => sum + d.intensity, 0) / data.length).toFixed(1)}
+              {data.length > 0 ? (data.reduce((sum, d) => sum + d.intensity, 0) / data.length).toFixed(1) : "0.0"}
             </div>
             <div className="text-xs text-gray-600">Promedio</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-red-600">{Math.max(...data.map((d) => d.intensity))}</div>
+            <div className="text-2xl font-bold text-red-600">
+              {data.length > 0 ? Math.max(...data.map((d) => d.intensity)) : 0}
+            </div>
             <div className="text-xs text-gray-600">Pico</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">{Math.min(...data.map((d) => d.intensity))}</div>
+            <div className="text-2xl font-bold text-green-600">
+              {data.length > 0 ? Math.min(...data.map((d) => d.intensity)) : 0}
+            </div>
             <div className="text-xs text-gray-600">Mínimo</div>
           </div>
         </div>
